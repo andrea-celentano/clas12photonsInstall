@@ -9,9 +9,9 @@ source get_coptions env
 # Options
 set name     = Clas12PhotonsAmpTools
 set release  = `./get_coptions release`
-set repo     = http://www.ge.infn.it/~celentan/clas12photons_software
+set repo     = https://github.com/andrea-celentano/Clas12PhotonsAmpTools/archive
 set version  = $CLAS12PHOTONSAMPTOOLS_VERSION
-set filename =  Clas12PhotonsAmpTools"_v"$CLAS12PHOTONSAMPTOOLS_VERSION".tar"
+set filename =  "v"$CLAS12PHOTONSAMPTOOLS_VERSION".tar.gz"
 set arch     = `./get_coptions arch`
 set opt      = `./get_coptions copt`
 set cmakev   = `./get_coptions cmakev | awk '{print $1}'`
@@ -47,8 +47,8 @@ src:
 	wget     $repo/$filename
 	echo Unpacking $filename
 	tar -xvf     $filename >& /dev/null
-	mv Clas12PhotonsAmpTools/* ./
-	rm -rf Clas12PhotonsAmpTools
+	mv Clas12PhotonsAmpTools-$version/* ./
+	rm -rf Clas12PhotonsAmpTools-$version
 	rm $filename
 if($1 == "src") exit
 

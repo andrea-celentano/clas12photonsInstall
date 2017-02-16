@@ -83,33 +83,4 @@ foreach p ($packages)
 end
 
 
-#4: Derek Event Generator
-setenv EDGEN $CLAS12PHOTONS_ROOT/$OSRELEASE/EdGen
-if( ! -d $EDGEN/lib ) then
-	echo " ? Attention: No EdGen installation found."
-else
-	echo " > EdGEN is installed in:  " $EDGEN
-	setenv LD_LIBRARY_PATH ${EDGEN}/lib:${LD_LIBRARY_PATH}
-endif
-
-
-#5: FASTMC (fortran)
-setenv FASTMC $CLAS12PHOTONS_ROOT/$OSRELEASE/fastmc
-if( ! -d $EDGEN ) then
-	echo " ? Attention: No FASTMC installation found."
-else
-	echo " > FASTMC is installed in:  " $FASTMC
-	setenv LD_LIBRARY_PATH ${FASTMC}:${LD_LIBRARY_PATH}
-endif
-
-#6: FASTMC c++ wrapper
-setenv ROOT_FASTMC $CLAS12PHOTONS_ROOT/$OSRELEASE/root_fastmc
-if( ! -d $ROOT_FASTMC ) then
-	echo " ? Attention: No FASTMC C++ Wrapper installation found."
-else
-	echo " > FASTMC C++ Wrapper is installed in:  " $ROOT_FASTMC
-	setenv LD_LIBRARY_PATH ${ROOT_FASTMC}:${LD_LIBRARY_PATH}
-endif
-
-
 unalias echo

@@ -1,0 +1,116 @@
+#!/bin/csh -f
+
+#alias cmake cmake3
+# library from http://proj-clhep.web.cern.ch/proj-clhep/
+
+# Additional settings at the top of get_coptions
+source get_coptions env
+
+# Options
+set name     = Clas12PhotonsAmpTools
+set release  = `./get_coptions release`
+set repo     = http://www.ge.infn.it/~celentan/clas12photons_software
+set version  = $CLAS12PHOTONSAMPTOOLS_VERSION
+set filename =  Clas12PhotonsAmpTools"_v"$CLAS12PHOTONSAMPTOOLS_VERSION".tar"
+set arch     = `./get_coptions arch`
+set opt      = `./get_coptions copt`
+set cmakev   = `./get_coptions cmakev | awk '{print $1}'`
+
+# Exit if cmake is not >= 3.3
+if($cmakev != "OK") then
+	./get_coptions cmakev
+	exit
+endif
+
+
+# Write options on screen
+./get_coptions log $name $version $filename $release $arch $opt
+
+
+# Checking if the OS is 32 bit. 
+set oarch = ""
+if($arch == "32") then
+	set oarch = '-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCPACK_SYSTEM_NAME=$OSRELEASE'
+endif
+echo " > Special Compilation Options: " $oarch 
+echo
+
+if($1 == "src"|| $1 == "make" || $1 == "fixconfig") goto $1
+
+# Source Build
+src:
+	# Getting source file
+	echo " > Installing CLAS12PhotonsAmpTools version "$version" - release "$release". Getting and unpacking" $filename"..."
+	rm -rf   $CLAS12PHOTONSAMPTOOLS
+	mkdir -p $CLAS12PHOTONSAMPTOOLS/lib
+	cd $CLAS12PHOTONSAMPTOOLS
+	wget     $repo/$filename
+	echo Unpacking $filename
+	tar -xvf     $filename >& /dev/null
+	mv Clas12PhotonsAmpTools/* ./
+	rm -rf Clas12PhotonsAmpTools
+	rm $filename
+if($1 == "src") exit
+
+# make
+make:
+	# Configuring and Compiling
+	echo " > Configuring and compiling AmpTools source (log will be in "\$OPENMPI/"make_log)..."
+	cd $CLAS12PHOTONSAMPTOOLS
+	if(! $?OPENMPI) then
+	    echo "MPI not enabled"
+	    make $opt    >> $CLAS12PHOTONSAMPTOOLS/make_log
+	else
+	    echo "MPI enabled"
+	    make $opt MPI=1 >> $CLAS12PHOTONSAMPTOOLS/make_log
+	endif
+	echo " > Configuring and compiling AmpPlotter source (log will be in "\$CLAS12PHOTONSAMPTOOLS/"make_log)..."
+
+
+if($1 == "make") exit
+
+
+
+
+
+# Done!
+echo done
+echo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

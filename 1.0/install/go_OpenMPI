@@ -1,0 +1,112 @@
+#!/bin/csh -f
+
+#alias cmake cmake3
+# library from http://proj-clhep.web.cern.ch/proj-clhep/
+
+# Additional settings at the top of get_coptions
+source get_coptions env
+
+# Options
+set name     = OpenMPI
+set release  = `./get_coptions release`
+set repo     = https://www.open-mpi.org/software/ompi/v2.0/downloads
+set version  = $OPENMPI_VERSION
+set filename =  openmpi"-"$OPENMPI_VERSION".tar.gz"
+set arch     = `./get_coptions arch`
+set opt      = `./get_coptions copt`
+set cmakev   = `./get_coptions cmakev | awk '{print $1}'`
+
+# Exit if cmake is not >= 3.3
+if($cmakev != "OK") then
+	./get_coptions cmakev
+	exit
+endif
+
+
+# Write options on screen
+./get_coptions log $name $version $filename $release $arch $opt
+
+
+# Checking if the OS is 32 bit. 
+set oarch = ""
+if($arch == "32") then
+	set oarch = '-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCPACK_SYSTEM_NAME=$OSRELEASE'
+endif
+echo " > Special Compilation Options: " $oarch 
+echo
+
+if($1 == "src"|| $1 == "make" || $1 == "fixconfig") goto $1
+
+# Source Build
+src:
+	# Getting source file
+	echo " > Installing OpenMPI version "$version" - release "$release". Getting and unpacking" $filename"..."
+	rm -rf   $OPENMPI
+	mkdir -p $OPENMPI
+
+	# Unpacking file.
+	cd $OPENMPI/..
+	rm -rf source ; mkdir source
+	cd source
+	rm -f          $filename
+	wget     $repo/$filename
+	echo Unpacking $filename
+	tar -zxvf     $filename >& /dev/null
+if($1 == "src") exit
+
+# make
+make:
+	# Configuring and Compiling
+	echo " > Configuring and compiling OpenMPI source (log will be in "\$OPENMPI/"make_log)..."
+	cd $OPENMPI/../source/openmpi-$version
+	./configure --prefix=$OPENMPI
+	make all $opt    >> $OPENMPI/make_log
+	make install >> $OPENMPI/make_log
+if($1 == "make") exit
+
+cd $OPENMPI/..
+#rm -rf source
+
+# Done!
+echo done
+echo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

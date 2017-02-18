@@ -16,13 +16,6 @@ set arch     = `./get_coptions arch`
 set opt      = `./get_coptions copt`
 set cmakev   = `./get_coptions cmakev | awk '{print $1}'`
 
-# Exit if cmake is not >= 3.3
-if($cmakev != "OK") then
-	./get_coptions cmakev
-	exit
-endif
-
-
 # Write options on screen
 ./get_coptions log $name $version $filename $release $arch $opt
 
@@ -41,17 +34,17 @@ if($1 == "src"|| $1 == "make" || $1 == "fixconfig") goto $1
 src:
 	# Getting source file
 	echo " > Installing AmpTools version "$version" - release "$release". Getting and unpacking" $filename"..."
-	rm -rf   $AMPTOOLS
+	rm -rf $CLAS12PHOTONS_SOFTWARE/AmpTools
 	mkdir -p $AMPTOOLS
 	cd $AMPTOOLS/../
 	mkdir src
-	cd src
+	cd src 
 	wget     $repo/$filename
 	echo Unpacking $filename
 	tar -xvf     $filename >& /dev/null
 	mv AmpTools/AmpTools/* $AMPTOOLS
-	mv AmpTools/Tutorials $AMPTOOLS/../
-	mv AmpTools/AmpPlotter $AMPTOOLS/../
+	mv AmpTools/Tutorials $AMPTOOLS/..
+	mv AmpTools/AmpPlotter $AMPTOOLS/..
 	rm -rf $AMPTOOLS/../src
 if($1 == "src") exit
 
@@ -60,7 +53,7 @@ make:
 	# Configuring and Compiling
 	echo " > Configuring and compiling AmpTools source (log will be in "\$OPENMPI/"make_log)..."
 	cd $AMPTOOLS
-	if(! $?OPENMPI) then
+	if(! -d $OPENMPI) then
 	    echo "MPI not enabled"
 	    make $opt    >> $AMPTOOLS/make_log
 	else

@@ -3,13 +3,18 @@
 #Source this script to use clas12photons software
 #Requires full installation of jlab12 software from CE package
 
+setenv overwrite "yes"
+if($1 == "keepmine") then
+	setenv overwrite "no"
+endif
+
 #print only if there is a prompt
 alias echo 'if($?prompt) echo \!*  '
 
 
 # Looking for user defined JLAB_VERSION
 if( ! $?CLAS12PHOTONS_VERSION || $overwrite == "yes") then
-	setenv CLAS12PHOTONS_VERSION 1.0
+	setenv CLAS12PHOTONS_VERSION 1.1
 endif
 
 

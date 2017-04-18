@@ -51,7 +51,7 @@ if($1 == "src") exit
 # make
 make:
 	# Configuring and Compiling
-	echo " > Configuring and compiling AmpTools source (log will be in "\$OPENMPI/"make_log)..."
+	echo " > Configuring and compiling AmpTools source (log will be in "\$AMPTOOLS/"make_log)..."
 	cd $AMPTOOLS
 	if(! -d $OPENMPI) then
 	    echo "MPI not enabled"
@@ -60,7 +60,7 @@ make:
 	    echo "MPI enabled"
 	    make $opt MPI=1 >> $AMPTOOLS/make_log
 	endif
-	echo " > Configuring and compiling AmpPlotter source (log will be in "\$OPENMPI/"make_log)..."
+	echo " > Configuring and compiling AmpPlotter source (log will be in "\$AMPTOOLS/"make_log)..."
 	cd $AMPPLOTTER
 	    make $opt 
 

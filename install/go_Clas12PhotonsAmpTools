@@ -9,7 +9,8 @@ source get_coptions env
 # Options
 set name     = Clas12PhotonsAmpTools
 set release  = `./get_coptions release`
-set repo     = https://github.com/andrea-celentano/Clas12PhotonsAmpTools/archive
+#set repo     = https://github.com/andrea-celentano/Clas12PhotonsAmpTools/archive
+set repo     = https://www.jlab.org/12gev_phys/packages/clas12photons_sources/Clas12PhotonsAmpTools
 set version  = $CLAS12PHOTONSAMPTOOLS_VERSION
 set filename =  "v"$CLAS12PHOTONSAMPTOOLS_VERSION".tar.gz"
 set arch     = `./get_coptions arch`

@@ -9,7 +9,8 @@ source get_coptions env
 # Options
 set name     = AmpTools
 set release  = `./get_coptions release`
-set repo     = https://downloads.sourceforge.net/project/amptools
+#set repo     = https://downloads.sourceforge.net/project/amptools
+set repo      = https://www.jlab.org/12gev_phys/packages/clas12photons_sources/AmpTools
 set version  = $AMPTOOLS_VERSION
 set filename =  AmpTools"_v"$AMPTOOLS_VERSION".tgz"
 set arch     = `./get_coptions arch`

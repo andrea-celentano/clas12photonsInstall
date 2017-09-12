@@ -14,7 +14,7 @@ alias echo 'if($?prompt) echo \!*  '
 
 # Looking for user defined JLAB_VERSION
 if( ! $?CLAS12PHOTONS_VERSION || $overwrite == "yes") then
-	setenv CLAS12PHOTONS_VERSION 1.2
+	setenv CLAS12PHOTONS_VERSION 1.2.1
 endif
 
 

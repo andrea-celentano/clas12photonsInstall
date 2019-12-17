@@ -71,9 +71,17 @@ if($1 == "dir") exit
 # Issue warning if it's not >= 3.3
 cmakev:
         set cmake_version     = `cmake --version | head -1 | awk '{print $3}' | awk -F- '{print $1}' | awk -F. '{print $1"."$2}'`
-        if( `echo "$cmake_version < 3.3" | bc `) then
+	set integer  = `echo $cmake_version | awk '{split ( $0,a,"." ) ; print a[1]}'`
+	set decimal  = `echo $cmake_version | awk '{split ( $0,a,"." ) ; print a[2]}'`
+        if( `echo "$integer >= 4" | bc ` ) then
+	        echo OK
+	else if ( `echo "$integer < 3" | bc ` ) then
                 echo cmake version is $cmake_version, 3.3 or higher is needed
-        else
+	else
+	    if ( `echo "$decimal < 3" | bc ` ) then
+                echo cmake version is $cmake_version, 3.3 or higher is needed
+	    else
                 echo OK
-        endif
+	    endif
+	endif
 if($1 == "cmakev") exit
